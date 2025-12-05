@@ -1,4 +1,4 @@
-export interface Challenge {
+4export interface Challenge {
   id: number;
   title: string;
   description: string;
