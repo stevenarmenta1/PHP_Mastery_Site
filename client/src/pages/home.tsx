@@ -27,11 +27,11 @@ export default function Home() {
         </div>
 
         <h1 className="text-5xl md:text-7xl font-serif font-bold text-foreground tracking-tight">
-          PHP & MySQL <span className="text-primary italic">Mastery</span>
+          PHP <span className="text-primary italic">Mastery</span>
         </h1>
         
         <p className="text-lg md:text-xl text-muted-foreground font-sans max-w-lg mx-auto leading-relaxed">
-          Master the fundamentals of PHP & MySQL through interactive flashcards. 
+          Master the fundamentals of PHP through interactive flashcards. 
           From syntax to functions, reinforce your knowledge one card at a time.
         </p>
 
