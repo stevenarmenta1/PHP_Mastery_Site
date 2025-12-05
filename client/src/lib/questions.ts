@@ -5,6 +5,21 @@ export interface Question {
   category: string;
 }
 
+/**
+ * TO ADD NEW FLASHCARDS:
+ * 1. Copy the object structure below.
+ * 2. Paste it at the end of the 'questions' array.
+ * 3. Update the 'id' to be unique (next number in sequence).
+ * 
+ * Template:
+ * {
+ *   id: 31,
+ *   category: "Topic Name",
+ *   question: "Your question here?",
+ *   answer: "The answer here."
+ * }
+ */
+
 export const questions: Question[] = [
   // Chapter 3 Questions
   {

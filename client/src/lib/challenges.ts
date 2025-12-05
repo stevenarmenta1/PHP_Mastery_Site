@@ -7,6 +7,23 @@ export interface Challenge {
   hint: string;
 }
 
+/**
+ * TO ADD NEW CHALLENGES:
+ * 1. Copy the structure below and paste it into the 'challenges' array.
+ * 2. Increment the 'id' field.
+ * 3. Add your title, description, and challenge details.
+ * 
+ * Template:
+ * {
+ *   id: 5, // Increment this number
+ *   title: "Challenge Title",
+ *   description: "Instructions for the user...",
+ *   initialCode: "<?php\n// Starter code here",
+ *   solution: "The expected answer code",
+ *   hint: "A helpful hint"
+ * }
+ */
+
 export const challenges: Challenge[] = [
   {
     id: 1,
