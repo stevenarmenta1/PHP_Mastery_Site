@@ -1,7 +1,7 @@
 import { Link } from "wouter";
 import { Button } from "@/components/ui/button";
 import { motion } from "framer-motion";
-import { BookOpen, BrainCircuit, Code2, List } from "lucide-react";
+import { BookOpen, BrainCircuit, Code2, List, Terminal } from "lucide-react";
 
 export default function Home() {
   return (
@@ -35,18 +35,25 @@ export default function Home() {
           From syntax to functions, reinforce your knowledge one card at a time.
         </p>
 
-        <div className="flex flex-col sm:flex-row items-center justify-center gap-4 pt-8">
+        <div className="flex flex-col sm:flex-row items-center justify-center gap-4 pt-8 flex-wrap">
           <Link href="/practice">
             <Button size="lg" className="h-14 px-8 text-lg rounded-full shadow-xl bg-primary hover:bg-primary/90 transition-all hover:scale-105 cursor-pointer">
               <BookOpen className="mr-2 w-5 h-5" />
-              Start Practicing
+              Flashcards
             </Button>
           </Link>
           
+          <Link href="/challenges">
+            <Button variant="outline" size="lg" className="h-14 px-8 text-lg rounded-full shadow-md hover:bg-secondary/50 hover:scale-105 transition-all cursor-pointer">
+              <Terminal className="mr-2 w-5 h-5" />
+              Code Lab
+            </Button>
+          </Link>
+
           <Link href="/questions">
             <Button variant="ghost" size="lg" className="h-14 px-8 text-lg rounded-full text-muted-foreground hover:bg-secondary/50 cursor-pointer">
               <List className="mr-2 w-5 h-5" />
-              View Question List
+              All Questions
             </Button>
           </Link>
         </div>
