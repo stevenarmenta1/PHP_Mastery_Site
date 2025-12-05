@@ -1,0 +1,237 @@
+help me set up a simple site where i can practice these questions and continue adding more questions, like flash card style, Questions
+
+What tag is used to invoke PHP to start interpreting program code? And what is the short form of the tag?
+
+What are the two types of comment tags?
+
+Which character must be placed at the end of every PHP statement?
+
+Which symbol is used to preface all PHP variables?
+
+What can a variable store?
+
+What is the difference between $variable = 1, $variable == 1, and $variable === 1?
+
+Why is an underscore allowed in variable names ($current_user), whereas hyphens are not ($current-user)?
+
+Are variable names case-sensitive?
+
+Can you use spaces in variable names?
+
+How do you convert one variable type to another (say, a string to a number)?
+
+What is the difference between ++$j and $j++?
+
+Are the operators && and and interchangeable?
+
+How can you create a multiline echo or assignment?
+
+Can you redefine a constant?
+
+How do you escape a quotation mark?
+
+What is the difference between the echo and print commands?
+
+What is the purpose of functions?
+
+How can you make a variable accessible to all parts of a PHP program?
+
+If you generate data within a function, what are a couple of ways to convey the data to the rest of the program?
+
+What is the result of combining a string with a number? Chapter 3 Answers
+
+1.
+
+The tag used is <?php...?>. It can be shortened to <?...?>, but that is not recommended practice.
+
+
+
+2.
+
+You can use // for a single-line comment or /*...*/ to span multiple lines.
+
+
+
+3.
+
+All PHP statements must end with a semicolon (;).
+
+
+
+4.
+
+With the exception of constants, all PHP variables must begin with $.
+
+
+
+5.
+
+A variable holds a value that can be a string, a number, or other data.
+
+
+
+6.
+
+$variable = 1 is an assignment statement, whereas the == in $variable == 1 and the === in $variable === 1 is a comparison operator. Use $variable = 1 to set the value of $variable. Use $variable === 1 to find out later in the program whether $variable equals the number 1. If you use $variable == 1, it returns true even if $variable is a string "1", which can cause unexpected bugs. If you mistakenly use $variable = 1 where you meant to do a comparison, it will do two things you probably don’t want: set $variable to 1 and return a true value all the time, no matter its previous value.
+
+
+
+7.
+
+In PHP, the hyphen is reserved for the subtraction, decrement, and negation operators. A construct like $current-user would be harder to interpret if hyphens were also allowed in variable names, and in any case would lead programs to be ambiguous.
+
+
+
+8.
+
+Yes, variable names are case-sensitive. $This_Variable is not the same as $this_variable.
+
+
+
+9.
+
+You cannot use spaces in variable names, as this would confuse the PHP parser. Instead, try using the _ (underscore), or use camelCase notation.
+
+
+
+10.
+
+You can use type casting to convert the type, for example like $number = (int)$string. However, if type declarations are not used and you want to convert one variable type to another, reference it and PHP will automatically convert it for you.
+
+
+
+11.
+
+There is no difference between ++$j and $j++ unless the value of $j is being tested, assigned to another variable, or passed as a parameter to a function. In such cases, ++$j increments $j before the test or other operation is performed, whereas $j++ performs the operation and then increments $j.
+
+
+
+12.
+
+Generally, the operators && and and are interchangeable except where precedence is important, in which case && has a high precedence, while and has a low one.
+
+
+
+13.
+
+You can use multiple lines within quotation marks or the <<<_END..._END; construct to create a multiline echo or assignment. In the latter case, the closing tag must be on a line by itself with nothing before or after it.
+
+
+
+14.
+
+You cannot redefine constants because, by definition, once defined they retain their value until the program terminates.
+
+
+
+15.
+
+You can use \' or \" to escape either a single or double quote.
+
+
+
+16.
+
+The echo and print commands are similar in that they are both constructs, except that print behaves like a PHP function and takes a single argument, while echo can take multiple arguments.
+
+
+
+17.
+
+The purpose of functions is to separate discrete sections of code into their own self-contained sections that can be referenced by a single function name.
+
+
+
+18.
+
+You can make a variable accessible to all parts of a PHP program by declaring it as global. However this is not a recommended approach in production code.
+
+
+
+19.
+
+If you generate data within a function, you can convey the data to the rest of the program by returning a value or modifying a global variable.
+
+
+
+20.
+
+When you combine a string with a number, the result is another string. and this chapter too Questions
+
+When printing data that contains TRUE and FALSE constants, what’s displayed instead of those two constants and why?
+
+What are the simplest two forms of expressions?
+
+What is the difference between unary, binary, and ternary operators?
+
+What is the best way to force your own operator precedence?
+
+What is meant by operator associativity?
+
+When would you use the === (identity) operator?
+
+Name the three conditional statement types.
+
+What command can you use to skip the current iteration of a loop and move on to the next one?
+
+What’s the difference between the for loop and the while loop?
+
+How do if and while statements interpret conditional expressions of different data types? Chapter 4 Answers
+
+1.
+
+When converting to string, TRUE is represented as the string value "1", and FALSE is represented as an empty string, so "1" and "" will be printed instead.
+
+
+
+2.
+
+The simplest forms of expressions are literals (such as numbers and strings) and variables, which simply evaluate to themselves.
+
+
+
+3.
+
+The difference between unary, binary, and ternary operators is the number of operands each requires (one, two, and three, respectively).
+
+
+
+4.
+
+The best way to force your own operator precedence is to place parentheses around subexpressions that you wish to give high precedence.
+
+
+
+5.
+
+Operator associativity refers to the direction of processing (left to right or right to left).
+
+
+
+6.
+
+Use the identity operator when you wish to avoid PHP’s automatic operand type changing (also called type casting), and the bugs it could introduce.
+
+
+
+7.
+
+The three conditional statement types are if, switch, and the ?: operator.
+
+
+
+8.
+
+To skip the current iteration of a loop and move to the next one, use a continue statement.
+
+
+
+9.
+
+The difference between for and while is that loops using for statements support two additional parameters to control the loop handling.
+
+
+
+10.
+
+Most conditional expressions in if and while statements are literals (or Booleans) and therefore trigger execution when they evaluate to TRUE. Numeric expressions trigger execution when they evaluate to a nonzero value. String expressions trigger execution when they evaluate to a nonempty string. A NULL value is evaluated as false and therefore does not trigger execution.
