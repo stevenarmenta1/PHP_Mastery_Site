@@ -1,7 +1,7 @@
 import { Link } from "wouter";
 import { Button } from "@/components/ui/button";
 import { motion } from "framer-motion";
-import { BookOpen, BrainCircuit, Code2, List, Terminal } from "lucide-react";
+import { BookOpen, BrainCircuit, Code2, List, Terminal, Settings } from "lucide-react";
 
 export default function Home() {
   return (
@@ -57,10 +57,42 @@ export default function Home() {
             </Button>
           </Link>
         </div>
+
+        <div className="flex justify-center pt-4">
+          <Link href="/manage">
+            <Button variant="outline" size="sm" className="gap-2">
+              <Settings className="w-4 h-4" />
+              Manage Content
+            </Button>
+          </Link>
+        </div>
       </motion.div>
 
-      <footer className="absolute bottom-8 text-sm text-muted-foreground/60 font-mono">
-        Chapter 3 & 4 • Interactive Study Guide
+      <footer className="absolute bottom-8 w-full flex justify-center gap-4 text-sm text-muted-foreground/60 font-mono">
+        <a 
+          href="https://www.linkedin.com/in/stevenarmenta/" 
+          target="_blank" 
+          rel="noopener noreferrer"
+          className="hover:underline hover:text-foreground transition-colors"
+        >
+          Linkedin.com/in/stevenarmenta
+        </a>
+
+        <a 
+          href="https://github.com/stevenarmenta1" 
+          target="_blank" 
+          rel="noopener noreferrer"
+          className="hover:underline hover:text-foreground transition-colors"
+        >
+          github.com/stevenarmenta1
+        </a>
+
+        <a 
+          href="mailto:stevenrayarmenta@gmail.com"
+          className="hover:underline hover:text-foreground transition-colors"
+        >
+          stevenrayarmenta@gmail.com
+        </a>
       </footer>
     </div>
   );

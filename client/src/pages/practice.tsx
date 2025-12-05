@@ -1,17 +1,52 @@
 import { useState, useEffect } from "react";
 import { Link } from "wouter";
 import { motion, AnimatePresence } from "framer-motion";
+import { useQuery } from "@tanstack/react-query";
 import { Flashcard } from "@/components/Flashcard";
-import { questions } from "@/lib/questions";
+import { fetchQuestions } from "@/lib/api";
 import { Button } from "@/components/ui/button";
 import { Progress } from "@/components/ui/progress";
-import { ChevronLeft, ChevronRight, Shuffle, RotateCcw, Home } from "lucide-react";
+import { ChevronLeft, ChevronRight, Shuffle, RotateCcw, Home, Plus } from "lucide-react";
 
 export default function Practice() {
+  const { data: questionsData = [], isLoading } = useQuery({
+    queryKey: ["questions"],
+    queryFn: fetchQuestions,
+  });
+
   const [currentIndex, setCurrentIndex] = useState(0);
   const [isFlipped, setIsFlipped] = useState(false);
-  const [shuffledQuestions, setShuffledQuestions] = useState(questions);
+  const [shuffledQuestions, setShuffledQuestions] = useState(questionsData);
   const [hasShuffled, setHasShuffled] = useState(false);
+
+  useEffect(() => {
+    if (questionsData.length > 0 && !hasShuffled) {
+      setShuffledQuestions(questionsData);
+    }
+  }, [questionsData, hasShuffled]);
+
+  if (isLoading) {
+    return (
+      <div className="min-h-screen flex items-center justify-center bg-background">
+        <p className="text-muted-foreground">Loading questions...</p>
+      </div>
+    );
+  }
+
+  if (shuffledQuestions.length === 0) {
+    return (
+      <div className="min-h-screen flex flex-col items-center justify-center bg-background p-4">
+        <h2 className="text-2xl font-serif font-bold mb-4">No Questions Yet</h2>
+        <p className="text-muted-foreground mb-8">Add some questions to get started!</p>
+        <Link href="/manage">
+          <Button>
+            <Plus className="w-4 h-4 mr-2" />
+            Add Questions
+          </Button>
+        </Link>
+      </div>
+    );
+  }
 
   const currentQuestion = shuffledQuestions[currentIndex];
   const progress = ((currentIndex + 1) / shuffledQuestions.length) * 100;
@@ -33,7 +68,7 @@ export default function Practice() {
   const handleShuffle = () => {
     setIsFlipped(false);
     setTimeout(() => {
-      const shuffled = [...questions].sort(() => Math.random() - 0.5);
+      const shuffled = [...shuffledQuestions].sort(() => Math.random() - 0.5);
       setShuffledQuestions(shuffled);
       setCurrentIndex(0);
       setHasShuffled(true);
@@ -43,13 +78,12 @@ export default function Practice() {
   const handleReset = () => {
     setIsFlipped(false);
     setTimeout(() => {
-      setShuffledQuestions(questions);
+      setShuffledQuestions(questionsData);
       setCurrentIndex(0);
       setHasShuffled(false);
     }, 300);
   };
 
-  // Keyboard navigation
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
       if (e.key === "ArrowRight") handleNext();
@@ -62,7 +96,6 @@ export default function Practice() {
 
   return (
     <div className="min-h-screen flex flex-col bg-background p-4 md:p-8">
-      {/* Header */}
       <header className="w-full max-w-4xl mx-auto flex items-center justify-between mb-8">
         <Link href="/">
           <Button variant="ghost" size="sm" className="gap-2 hover:bg-transparent hover:text-primary">
@@ -80,7 +113,6 @@ export default function Practice() {
         </div>
       </header>
 
-      {/* Main Content */}
       <main className="flex-1 flex flex-col items-center justify-center w-full max-w-4xl mx-auto gap-8 relative">
         <AnimatePresence mode="wait">
           <motion.div
@@ -100,7 +132,6 @@ export default function Practice() {
           </motion.div>
         </AnimatePresence>
 
-        {/* Category Badge */}
         <div className="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-12 md:-translate-y-16">
           <span className="px-3 py-1 rounded-full text-xs font-semibold bg-primary/10 text-primary uppercase tracking-widest">
             {currentQuestion.category}
@@ -108,7 +139,6 @@ export default function Practice() {
         </div>
       </main>
 
-      {/* Controls */}
       <footer className="w-full max-w-4xl mx-auto mt-8 grid grid-cols-1 md:grid-cols-3 gap-4 items-center">
         <div className="flex justify-center md:justify-start gap-2">
           <Button 

@@ -1,26 +1,60 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Link } from "wouter";
-import { motion, AnimatePresence } from "framer-motion";
+import { motion } from "framer-motion";
+import { useQuery } from "@tanstack/react-query";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Textarea } from "@/components/ui/textarea";
-import { ArrowLeft, Check, X, HelpCircle, Code2, RotateCcw, ChevronRight } from "lucide-react";
-import { challenges } from "@/lib/challenges";
+import { ArrowLeft, Check, X, HelpCircle, Code2, RotateCcw, ChevronRight, Plus } from "lucide-react";
+import { fetchChallenges } from "@/lib/api";
 import { cn } from "@/lib/utils";
 
 export default function CodeChallenge() {
+  const { data: challengesData = [], isLoading } = useQuery({
+    queryKey: ["challenges"],
+    queryFn: fetchChallenges,
+  });
+
   const [currentIndex, setCurrentIndex] = useState(0);
-  const [userCode, setUserCode] = useState(challenges[0].initialCode);
+  const [userCode, setUserCode] = useState("");
   const [status, setStatus] = useState<"idle" | "success" | "error">("idle");
   const [showHint, setShowHint] = useState(false);
 
-  const currentChallenge = challenges[currentIndex];
+  useEffect(() => {
+    if (challengesData.length > 0) {
+      setUserCode(challengesData[currentIndex]?.initialCode || "");
+    }
+  }, [challengesData, currentIndex]);
+
+  if (isLoading) {
+    return (
+      <div className="min-h-screen flex items-center justify-center bg-background">
+        <p className="text-muted-foreground">Loading challenges...</p>
+      </div>
+    );
+  }
+
+  if (challengesData.length === 0) {
+    return (
+      <div className="min-h-screen flex flex-col items-center justify-center bg-background p-4">
+        <h2 className="text-2xl font-serif font-bold mb-4">No Challenges Yet</h2>
+        <p className="text-muted-foreground mb-8">Add some coding challenges to get started!</p>
+        <Link href="/manage">
+          <Button>
+            <Plus className="w-4 h-4 mr-2" />
+            Add Challenges
+          </Button>
+        </Link>
+      </div>
+    );
+  }
+
+  const currentChallenge = challengesData[currentIndex];
 
   const normalizeCode = (code: string) => {
-    // Remove comments, extra whitespace, and newlines to make comparison more forgiving
     return code
-      .replace(/\/\/.*$/gm, "") // remove single line comments
-      .replace(/\s+/g, " ")     // collapse whitespace
+      .replace(/\/\/.*$/gm, "")
+      .replace(/\s+/g, " ")
       .trim();
   };
 
@@ -28,11 +62,6 @@ export default function CodeChallenge() {
     const normalizedUser = normalizeCode(userCode);
     const normalizedSolution = normalizeCode(currentChallenge.solution);
 
-    // Very basic check - in a real app we'd want an AST parser or server-side execution
-    // For this prototype, we'll check if the user's code *contains* the core logic or matches the solution
-    // We can be a bit flexible by checking for key tokens
-    
-    // Fallback: strict comparison of normalized strings
     if (normalizedUser.includes(normalizedSolution) || normalizedUser === normalizedSolution) {
       setStatus("success");
     } else {
@@ -41,9 +70,8 @@ export default function CodeChallenge() {
   };
 
   const handleNext = () => {
-    if (currentIndex < challenges.length - 1) {
+    if (currentIndex < challengesData.length - 1) {
       setCurrentIndex(prev => prev + 1);
-      setUserCode(challenges[currentIndex + 1].initialCode);
       setStatus("idle");
       setShowHint(false);
     }
@@ -65,13 +93,12 @@ export default function CodeChallenge() {
           </Link>
           <div>
             <h1 className="text-2xl font-serif font-bold text-foreground">Code Lab</h1>
-            <p className="text-sm text-muted-foreground">Challenge {currentIndex + 1} of {challenges.length}</p>
+            <p className="text-sm text-muted-foreground">Challenge {currentIndex + 1} of {challengesData.length}</p>
           </div>
         </div>
       </header>
 
       <main className="flex-1 max-w-5xl mx-auto w-full grid grid-cols-1 lg:grid-cols-2 gap-8">
-        {/* Left Column: Instructions */}
         <div className="space-y-6">
           <Card className="border-2 border-primary/10 shadow-sm">
             <CardHeader>
@@ -122,7 +149,7 @@ export default function CodeChallenge() {
                 <h3 className="text-lg font-semibold text-green-800 dark:text-green-300">Excellent!</h3>
                 <p className="text-green-700 dark:text-green-400/80">Your code looks correct.</p>
               </div>
-              {currentIndex < challenges.length - 1 ? (
+              {currentIndex < challengesData.length - 1 ? (
                 <Button onClick={handleNext} className="w-full bg-green-600 hover:bg-green-700 text-white">
                   Next Challenge <ChevronRight className="w-4 h-4 ml-2" />
                 </Button>
@@ -147,7 +174,6 @@ export default function CodeChallenge() {
           )}
         </div>
 
-        {/* Right Column: Editor */}
         <div className="flex flex-col gap-4 h-full min-h-[400px]">
           <div className="relative flex-1 rounded-xl border-2 border-muted bg-card overflow-hidden shadow-sm focus-within:border-primary/50 transition-colors">
             <div className="absolute top-0 left-0 right-0 h-8 bg-muted/50 border-b border-muted flex items-center px-4 text-xs font-mono text-muted-foreground">

@@ -8,6 +8,7 @@ import Home from "@/pages/home";
 import Practice from "@/pages/practice";
 import QuestionsList from "@/pages/questions-list";
 import CodeChallenge from "@/pages/code-challenge";
+import Manage from "@/pages/manage";
 
 function Router() {
   return (
@@ -16,6 +17,7 @@ function Router() {
       <Route path="/practice" component={Practice} />
       <Route path="/questions" component={QuestionsList} />
       <Route path="/challenges" component={CodeChallenge} />
+      <Route path="/manage" component={Manage} />
       <Route component={NotFound} />
     </Switch>
   );
